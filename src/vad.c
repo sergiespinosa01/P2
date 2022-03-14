@@ -7,6 +7,7 @@
 
 const float FRAME_TIME = 10.0F; /* in ms. */
 #define MAX_MB 2
+#define N_TRAMAS 3
 
 /*
  * As the output state is only ST_VOICE, ST_SILENCE, or ST_UNDEF,
@@ -99,12 +100,29 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x)
 
   Features f = compute_features(x, vad_data->frame_length);
   vad_data->last_feature = f.p; /* save feature, in case you want to show */
+  vad_data->p1 = pow(10, vad_data->alpha1 / 10);
 
   switch (vad_data->state)
   {
   case ST_INIT:
-    vad_data->p1 = f.p + vad_data->alpha1;
-    vad_data->state = ST_SILENCE;
+
+    /* Calculamos la media de las primeras N_TRAMAS y hacemos
+     * la media para calcular el valor medio del ruido y tomar
+     * esa media como referencia
+     */
+
+    if (vad_data->counter == N_TRAMAS)
+    {
+      vad_data->p1 = vad_data->p1 / N_TRAMAS;
+      vad_data->p1 = 10 * log10(vad_data->p1);
+      vad_data->counter = 0;
+      vad_data->state = ST_SILENCE;
+    }
+    else
+    {
+      vad_data->p1 = +pow(10, f.p / 10);
+      vad_data->counter++;
+    }
     break;
 
   case ST_SILENCE:
@@ -113,6 +131,12 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x)
     break;
 
   case ST_MBVOICE:
+
+   /* Queremos comprobar que el aumento de potencia en la trama
+    * anterior se repite en algun momento en MAX_MB tramas para
+    * asegurarnos de que de verdad es voz
+    */ 
+   
     if (vad_data->counter == MAX_MB)
     {
       vad_data->state = ST_SILENCE;
@@ -155,13 +179,8 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x)
     break;
   }
 
-  /** if (vad_data->state == ST_SILENCE ||
-       vad_data->state == ST_VOICE || vad_data->state == ST_MBSILENCE || vad_data->state == ST_MBVOICE)
-     return vad_data->state;
-   else
-     return ST_UNDEF;**/
-
-  if (vad_data->state == ST_SILENCE || vad_data->state == ST_VOICE)
+  if (vad_data->state == ST_SILENCE ||
+      vad_data->state == ST_VOICE || vad_data->state == ST_MBSILENCE || vad_data->state == ST_MBVOICE)
     return vad_data->state;
   else
     return ST_UNDEF;
