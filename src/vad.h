@@ -18,12 +18,7 @@ typedef struct {
   unsigned int frame_length;
   float counter;
   float last_feature; /* for debuggin purposes */
-<<<<<<< HEAD
-  float p1;
-  float alpha1;
-=======
   float alpha1;  
->>>>>>> e7d6765f36c8bab571ae2fdb4cb83e8f88c665ae
 } VAD_DATA;
 
 /* Call this function before using VAD: 

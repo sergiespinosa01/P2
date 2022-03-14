@@ -20,7 +20,6 @@ typedef struct {
     char *input_wav;
     char *output_vad;
     char *output_wav;
-    char *alpha1;
     /* special */
     const char *usage_pattern;
     const char *help_message;
@@ -38,11 +37,7 @@ const char help_message[] =
 "   -i FILE, --input-wav=FILE   WAVE file for voice activity detection\n"
 "   -o FILE, --output-vad=FILE  Label file with the result of VAD\n"
 "   -w FILE, --output-wav=FILE  WAVE file with silences cleared\n"
-<<<<<<< HEAD
-"   -1 FLOAT, -–alpha1=FLOAT    Umbral voz-silencio [default: 10]\n"
-=======
 "   -1 FLOAT, --alpha1=FLOAT    Umbral voz silencio [default: 10]\n"
->>>>>>> e7d6765f36c8bab571ae2fdb4cb83e8f88c665ae
 "   -v, --verbose  Show debug information\n"
 "   -h, --help     Show this screen\n"
 "   --version      Show the version of the project\n"
@@ -312,11 +307,7 @@ int elems_to_args(Elements *elements, DocoptArgs *args, bool help,
 
 DocoptArgs docopt(int argc, char *argv[], bool help, const char *version) {
     DocoptArgs args = {
-<<<<<<< HEAD
-        0, 0, 0, NULL, NULL, NULL, (char*) "10",
-=======
         0, 0, 0, (char*) "10", NULL, NULL, NULL,
->>>>>>> e7d6765f36c8bab571ae2fdb4cb83e8f88c665ae
         usage_pattern, help_message
     };
     Tokens ts;
