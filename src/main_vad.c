@@ -83,20 +83,22 @@ int main(int argc, char *argv[]) {
     }
 
     state = vad(vad_data, buffer);
-    if (verbose & DEBUG_VAD) vad_show_state(vad_data, stdout);
+    //if(state == ST_MBSILENCE || state == ST_MBVOICE) state = last_state;
+    
+      if (verbose & DEBUG_VAD) vad_show_state(vad_data, stdout);
 
-    /* TODO: print only SILENCE and VOICE labels */
-    /* As it is, it prints UNDEF segments but is should be merge to the proper value */
-    if (state != last_state) {
-      if (t != last_t)
-        fprintf(vadfile, "%.5f\t%.5f\t%s\n", last_t * frame_duration, t * frame_duration, state2str(last_state));
-      last_state = state;
-      last_t = t;
-    }
+      /* TODO: print only SILENCE and VOICE labels */
+      /* As it is, it prints UNDEF segments but is should be merge to the proper value */
+      if (state != last_state && state!= ST_MBSILENCE && state!= ST_MBVOICE) {
+        if (t != last_t)
+          fprintf(vadfile, "%.5f\t%.5f\t%s\n", last_t * frame_duration, t * frame_duration, state2str(last_state));
+        last_state = state;
+        last_t = t;
+      }
 
-    if (sndfile_out != 0) {
-      /* TODO: go back and write zeros in silence segments */
-    }
+      if (sndfile_out != 0) {
+        /* TODO: go back and write zeros in silence segments */
+      }
   }
 
   state = vad_close(vad_data);
