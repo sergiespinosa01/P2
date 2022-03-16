@@ -34,6 +34,7 @@ int main(int argc, char *argv[])
   output_vad = args.output_vad;
   output_wav = args.output_wav;
   float alpha1 = atof(args.alpha1);
+  float alpha2 = 2;
 
   if (input_wav == 0 || output_vad == 0)
   {
@@ -71,7 +72,7 @@ int main(int argc, char *argv[])
     }
   }
 
-  vad_data = vad_open(sf_info.samplerate, alpha1);
+  vad_data = vad_open(sf_info.samplerate, alpha1, alpha2);
   /* Allocate memory for buffers */
   frame_size = vad_frame_size(vad_data);
   buffer = (float *)malloc(frame_size * sizeof(float));
@@ -91,6 +92,12 @@ int main(int argc, char *argv[])
     if (sndfile_out != 0)
     {
       /* TODO: copy all the samples into sndfile_out */
+      if (state == ST_VOICE)
+      {
+        sf_write_float(sndfile_out, buffer, frame_size);
+      } else{
+        sf_write_float(sndfile_out, 0, frame_size);
+      }
     }
 
     state = vad(vad_data, buffer);
