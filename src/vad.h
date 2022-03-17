@@ -27,10 +27,12 @@ typedef struct
    float sampling_rate;
    unsigned int frame_length;
    float counter;
-   unsigned int MAX_MB;
+   unsigned int MAX_MBSILENCE;
+   unsigned int MAX_MBVOICE;
    unsigned int N_TRAMAS;
    unsigned int MIN_VOICE;
    unsigned int MIN_SILENCE;
+   unsigned int ZCR_REFERENCE;
    float last_feature; /* for debuggin purposes */
    float alpha1;
    float alpha2;

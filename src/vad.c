@@ -65,10 +65,12 @@ VAD_DATA *vad_open(float rate, float alpha1, float alpha2)
   vad_data->alpha1 = alpha1;
   vad_data->alpha2 = alpha2;
   vad_data->counter = 0;
-  vad_data->MAX_MB = 5;
+  vad_data->MAX_MBSILENCE = 11;
+  vad_data->MAX_MBVOICE = 5;
   vad_data->MIN_VOICE = 30;
-  vad_data->MIN_SILENCE = 10;
+  vad_data->MIN_SILENCE = 1;
   vad_data->N_TRAMAS = 3;
+  vad_data->ZCR_REFERENCE = 2600;
   return vad_data;
 }
 
@@ -106,47 +108,23 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x)
   switch (vad_data->state)
   {
   case ST_INIT:
-
-    /*
-    if (vad_data->counter < N_TRAMAS)
-    {
-      vad_data->k1 = +pow(10, f.p / 10);
-      vad_data->counter++;
-    }
-    else
-    {
-      vad_data->k1+=
-      vad_data->k1 = vad_data->k1 / N_TRAMAS;
-      vad_data->k1 = 10 * log10(vad_data->k1);
-      vad_data->counter = 0;
-      vad_data->k2 = vad_data->k1;
-      vad_data->state = ST_SILENCE;
-    } */
     vad_data->k1 = f.p + vad_data->alpha1;
-    vad_data->k2 = f.p + vad_data->alpha1 + vad_data->alpha2;
+    vad_data->k2 = f.p + vad_data->alpha2;
     vad_data->state = ST_SILENCE;
     break;
 
   case ST_SILENCE:
     if (f.p > vad_data->k1)
-    {
       vad_data->state = ST_MBVOICE;
-      vad_data->counter = 0;
-    }
-    else
-    {
-      vad_data->counter++;
-    }
-
     break;
 
   case ST_MBVOICE:
-    if (vad_data->counter == vad_data->MAX_MB || f.p < vad_data->k1)
+    if (vad_data->counter == vad_data->MAX_MBVOICE || f.p < vad_data->k1)
     {
       vad_data->state = ST_SILENCE;
       vad_data->counter = 0;
     }
-    else if (vad_data->k2 >= f.p)
+    else if (vad_data->k2 < f.p)
     {
       vad_data->state = ST_VOICE;
       vad_data->counter = 0;
@@ -167,7 +145,8 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x)
     break;
 
   case ST_MBSILENCE:
-    if (vad_data->counter == vad_data->MAX_MB || f.p > vad_data->k2)
+    if (vad_data->counter == vad_data->MAX_MBSILENCE || f.p > vad_data->k2 ||
+        f.zcr > vad_data->ZCR_REFERENCE)
     {
       vad_data->state = ST_VOICE;
       vad_data->counter = 0;

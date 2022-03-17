@@ -33,8 +33,9 @@ int main(int argc, char *argv[])
   input_wav = args.input_wav;
   output_vad = args.output_vad;
   output_wav = args.output_wav;
-  float alpha1 = atof(args.alpha1);
-  float alpha2 = 2;
+  //float alpha1 = atof(args.alpha1);
+  float alpha1 = 3.2;
+  float alpha2 = alpha1+7.6;
 
   if (input_wav == 0 || output_vad == 0)
   {
