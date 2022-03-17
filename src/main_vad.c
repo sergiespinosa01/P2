@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
   output_vad = args.output_vad;
   output_wav = args.output_wav;
   float alpha1 = atof(args.alpha1);
-  float alpha2 = 2;
+  float alpha2 = 4*alpha1;
 
   if (input_wav == 0 || output_vad == 0)
   {
@@ -140,3 +140,4 @@ int main(int argc, char *argv[])
     sf_close(sndfile_out);
   return 0;
 }
+

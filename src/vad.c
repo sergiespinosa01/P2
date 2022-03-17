@@ -67,7 +67,7 @@ VAD_DATA *vad_open(float rate, float alpha1, float alpha2)
   vad_data->counter = 0;
   vad_data->MAX_MB = 5;
   vad_data->MIN_VOICE = 30;
-  vad_data->MIN_SILENCE = 10;
+  vad_data->MIN_SILENCE = 5;
   vad_data->N_TRAMAS = 3;
   return vad_data;
 }
@@ -123,12 +123,12 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x)
       vad_data->state = ST_SILENCE;
     } */
     vad_data->k1 = f.p + vad_data->alpha1;
-    vad_data->k2 = f.p + vad_data->alpha1 + vad_data->alpha2;
+    vad_data->k2 = f.p + vad_data->alpha2;
     vad_data->state = ST_SILENCE;
     break;
 
   case ST_SILENCE:
-    if (f.p > vad_data->k1)
+    if (f.p > vad_data->k1 && vad_data->counter > vad_data->MIN_SILENCE)
     {
       vad_data->state = ST_MBVOICE;
       vad_data->counter = 0;
@@ -146,7 +146,7 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x)
       vad_data->state = ST_SILENCE;
       vad_data->counter = 0;
     }
-    else if (vad_data->k2 >= f.p)
+    else if (f.p >= vad_data->k1)
     {
       vad_data->state = ST_VOICE;
       vad_data->counter = 0;
@@ -167,12 +167,12 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x)
     break;
 
   case ST_MBSILENCE:
-    if (vad_data->counter == vad_data->MAX_MB || f.p > vad_data->k2)
+    if (vad_data->counter == vad_data->MAX_MB || f.p > vad_data->k1)
     {
       vad_data->state = ST_VOICE;
       vad_data->counter = 0;
     }
-    else if (f.p < vad_data->k1)
+    else if (f.p <= vad_data->k1)
     {
       vad_data->state = ST_SILENCE;
       vad_data->counter = 0;
