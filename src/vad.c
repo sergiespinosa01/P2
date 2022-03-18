@@ -56,7 +56,7 @@ Features compute_features(const float *x, int N)
  * TODO: Init the values of vad_data
  */
 
-VAD_DATA *vad_open(float rate, float alpha1, float alpha2)
+VAD_DATA *vad_open(float rate, float alpha1, float alpha2, float alpha3)
 {
   VAD_DATA *vad_data = malloc(sizeof(VAD_DATA));
   vad_data->state = ST_INIT;
@@ -64,8 +64,9 @@ VAD_DATA *vad_open(float rate, float alpha1, float alpha2)
   vad_data->frame_length = rate * FRAME_TIME * 1e-3;
   vad_data->alpha1 = alpha1;
   vad_data->alpha2 = alpha2;
+  vad_data->alpha3 = alpha3;
   vad_data->counter = 0;
-  vad_data->MAX_MBSILENCE = 11;
+  vad_data->MAX_MBSILENCE = 9;
   vad_data->MAX_MBVOICE = 5;
   vad_data->MIN_VOICE = 30;
   vad_data->MIN_SILENCE = 1;
@@ -90,18 +91,8 @@ unsigned int vad_frame_size(VAD_DATA *vad_data)
   return vad_data->frame_length;
 }
 
-/*
- * TODO: Implement the Voice Activity Detection
- * using a Finite State Automata
- */
-
 VAD_STATE vad(VAD_DATA *vad_data, float *x)
 {
-
-  /*
-   * TODO: You can change this, using your own features,
-   * program finite state automaton, define conditions, etc.
-   */
 
   Features f = compute_features(x, vad_data->frame_length);
   vad_data->last_feature = f.p; /* save feature, in case you want to show */
@@ -110,6 +101,7 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x)
   case ST_INIT:
     vad_data->k1 = f.p + vad_data->alpha1;
     vad_data->k2 = f.p + vad_data->alpha2;
+    vad_data->k3 = f.p + vad_data->alpha3;
     vad_data->state = ST_SILENCE;
     break;
 
@@ -145,7 +137,7 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x)
     break;
 
   case ST_MBSILENCE:
-    if (vad_data->counter == vad_data->MAX_MBSILENCE || f.p > vad_data->k2 ||
+    if (vad_data->counter == vad_data->MAX_MBSILENCE || f.p > vad_data->k3 ||
         f.zcr > vad_data->ZCR_REFERENCE)
     {
       vad_data->state = ST_VOICE;
