@@ -24,6 +24,7 @@ typedef struct
    VAD_STATE state;
    float k1;
    float k2;
+   float k3;
    float sampling_rate;
    unsigned int frame_length;
    float counter;
@@ -31,18 +32,18 @@ typedef struct
    unsigned int MAX_MBVOICE;
    unsigned int N_TRAMAS;
    unsigned int MIN_VOICE;
-   unsigned int MIN_SILENCE;
    unsigned int ZCR_REFERENCE;
    float last_feature; /* for debuggin purposes */
    float alpha1;
    float alpha2;
+   float alpha3;
 } VAD_DATA;
 
 /* Call this function before using VAD:
    It should return allocated and initialized values of vad_data
 
    sampling_rate: ... the sampling rate */
-VAD_DATA *vad_open(float sampling_rate, float alpha1, float alpha2);
+VAD_DATA *vad_open(float sampling_rate, float alpha1, float alpha2, float alpha3);
 
 /* vad works frame by frame.
    This function returns the frame size so that the program knows how

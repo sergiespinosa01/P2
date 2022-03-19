@@ -33,10 +33,9 @@ int main(int argc, char *argv[])
   input_wav = args.input_wav;
   output_vad = args.output_vad;
   output_wav = args.output_wav;
-  //float alpha1 = atof(args.alpha1);
-  float alpha1 = 3.25 ;
-  float alpha2 = alpha1+8.5;
-
+  float alpha1 = atof(args.alpha1);
+  float alpha2 = atof(args.alpha2);
+  float alpha3 = atof(args.alpha3);
   if (input_wav == 0 || output_vad == 0)
   {
     fprintf(stderr, "%s\n", args.usage_pattern);
@@ -73,7 +72,7 @@ int main(int argc, char *argv[])
     }
   }
 
-  vad_data = vad_open(sf_info.samplerate, alpha1, alpha2);
+  vad_data = vad_open(sf_info.samplerate, alpha1, alpha2, alpha3);
   /* Allocate memory for buffers */
   frame_size = vad_frame_size(vad_data);
   buffer = (float *)malloc(frame_size * sizeof(float));
@@ -96,8 +95,10 @@ int main(int argc, char *argv[])
       if (state == ST_VOICE)
       {
         sf_write_float(sndfile_out, buffer, frame_size);
-      } else{
-        sf_write_float(sndfile_out, 0, frame_size);
+      }
+      else
+      {
+        sf_write_float(sndfile_out, buffer_zeros, frame_size);
       }
     }
 
@@ -141,4 +142,3 @@ int main(int argc, char *argv[])
     sf_close(sndfile_out);
   return 0;
 }
-
