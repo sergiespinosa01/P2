@@ -69,8 +69,7 @@ VAD_DATA *vad_open(float rate, float alpha1, float alpha2, float alpha3)
   vad_data->MAX_MBSILENCE = 9;
   vad_data->MAX_MBVOICE = 5;
   vad_data->MIN_VOICE = 30;
-  vad_data->MIN_SILENCE = 1;
-  vad_data->N_TRAMAS = 3;
+  vad_data->N_TRAMAS = 10;
   vad_data->ZCR_REFERENCE = 2600;
   return vad_data;
 }
@@ -99,6 +98,21 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x)
   switch (vad_data->state)
   {
   case ST_INIT:
+    /*
+    if (vad_data->counter < vad_data->N_TRAMAS)
+    {
+      vad_data->k1 += f.p;
+      vad_data->counter++;
+    }
+    else
+    {
+      vad_data->k1 = vad_data->k1 / vad_data->N_TRAMAS;
+      vad_data->k1 = vad_data->k1 + vad_data->alpha1;
+      vad_data->k2 = vad_data->k1 + vad_data->alpha2;
+      vad_data->k3 = vad_data->k1 + vad_data->alpha3;
+      vad_data->counter=0;
+      vad_data->state = ST_SILENCE;
+    }*/
     vad_data->k1 = f.p + vad_data->alpha1;
     vad_data->k2 = f.p + vad_data->alpha2;
     vad_data->k3 = f.p + vad_data->alpha3;
