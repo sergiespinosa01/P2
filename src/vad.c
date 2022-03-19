@@ -64,7 +64,7 @@ VAD_DATA *vad_open(float rate, float alpha1, float alpha2, float alpha3)
   vad_data->frame_length = rate * FRAME_TIME * 1e-3;
   vad_data->alpha1 = alpha1;
   vad_data->alpha2 = alpha2;
-  vad_data->alpha3 = alpha3;
+  /*vad_data->alpha3 = alpha3; */
   vad_data->counter = 0;
   vad_data->MAX_MBSILENCE = 6;
   vad_data->MAX_MBVOICE = 5;
@@ -109,13 +109,14 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x)
       vad_data->k1 = vad_data->k1 / vad_data->N_TRAMAS;
       vad_data->k1 = vad_data->k1 + vad_data->alpha1;
       vad_data->k2 = vad_data->k1 + vad_data->alpha2;
-      vad_data->k3 = vad_data->k1 + vad_data->alpha3;
+      /*
+      vad_data->k3 = vad_data->k1 + vad_data->alpha3; */
       vad_data->counter=0;
       vad_data->state = ST_SILENCE;
     }
     vad_data->k1 = f.p + vad_data->alpha1;
     vad_data->k2 = f.p + vad_data->alpha2;
-    vad_data->k3 = f.p + vad_data->alpha3;
+    /*vad_data->k3 = f.p + vad_data->alpha3; */
     vad_data->state = ST_SILENCE;
     break;
 
@@ -193,7 +194,7 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x)
     }
     break;  */
 
-    if ((vad_data->counter < vad_data->MAX_MBSILENCE && f.p > vad_data->k3) ||
+    if ((vad_data->counter < vad_data->MAX_MBSILENCE && f.p > vad_data->k2) ||
         (vad_data->counter < vad_data->MAX_MBSILENCE && f.zcr > vad_data->ZCR_REFERENCE))
 
     {

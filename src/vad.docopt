@@ -11,7 +11,6 @@ Options:
    -w FILE, --output-wav=FILE  WAVE file with silences cleared
    -1 FLOAT, --alpha1=FLOAT    Umbral silencio [default: 3.4]
    -2 FLOAT, --alpha2=FLOAT    Umbral voz [default: 11.75]
-   -3 FLOAT, --alpha3=FLOAT    Umbral estado MB [default: 11.75]
    -v, --verbose  Show debug information
    -h, --help     Show this screen
    --version      Show the version of the project
