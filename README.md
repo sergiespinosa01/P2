@@ -108,7 +108,7 @@ Ejercicios
 Senyal temporal i taxa de creuaments per zero:
 
 
-! [image] (/Users/sergi/PAV/P2/img)
+<img src="/Users/sergi/PAV/P2/img.jpg" width="640" align="center">
 
 Senyal temporal i contron de potència:
 
