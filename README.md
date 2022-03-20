@@ -110,7 +110,7 @@ Senyal temporal i taxa de creuaments per zero:
 ![zcr](https://user-images.githubusercontent.com/100561275/159188438-f0ec39d1-fc41-497e-8581-e43da3a71430.jpg)
 
 
-Senyal temporal i contron de potència:
+Senyal temporal i contorn de potència:
 
 
 Etiquetat dels segments de veu i silenci:
@@ -128,12 +128,12 @@ Etiquetat dels segments de veu i silenci:
 
 	Duració mínima segment de veu: 26 trames
 	Duració mínima segment de silenci: hem estat experimentant amb duracions vàries de silenci, i totes les que 
-	hem provat baixaven el rendiment. Al final hem decidit no exigir una duració mínima de un segment silenci.
+	hem provat baixaven el rendiment. Al final hem decidit no exigir una duració mínima d'un segment silenci.
 
 	* ¿Es capaz de sacar alguna conclusión a partir de la evolución de la tasa de cruces por cero?
 	
 	Podem veure que als segments de veu la taxa de creuaments per zero és més elevada que en silenci, això es especialment
-	útil per diferenciar el silenci de sons sords com la s
+	útil per diferenciar el silenci de sons sords com la s.
 
 
 ### Desarrollo del detector de actividad vocal
@@ -165,15 +165,18 @@ manual.
 - Si ha desarrollado el algoritmo para la cancelación de los segmentos de silencio, inserte una gráfica en
   la que se vea con claridad la señal antes y después de la cancelación (puede que `wavesurfer` no sea la
   mejor opción para esto, ya que no es capaz de visualizar varias señales al mismo tiempo).
+  
 <img src="img/4151.jpg" width="640" align="center">
 <img src="img/4151_NC.jpg" width="640" align="center">
-La segona grafica és amb el soroll eliminat quan estem a silenci.
+
+La segona gràfica és amb el soroll eliminat quan estem a silenci.
 
 
 #### Gestión de las opciones del programa usando `docopt_c`
 
 - Si ha usado `docopt_c` para realizar la gestión de las opciones y argumentos del programa `vad`, inserte
   una captura de pantalla en la que se vea el mensaje de ayuda del programa.
+  
  <img src="img/vad_docopt.jpg" width="640" align="center">
 
 ### Contribuciones adicionales y/o comentarios acerca de la práctica
