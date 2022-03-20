@@ -113,8 +113,7 @@ Senyal temporal i contron de potència:
 
 
 Etiquetat dels segments de veu i silenci:
-![image] (/Users/sergi/PAV/P2/img/Captura de pantalla 2022-03-20 a les 19.43.06.png)
-
+<img src="img/Transcripcion.jpg" width="640" align="center">
 
 
 - A la vista de la gráfica, indique qué valores considera adecuados para las magnitudes siguientes:
@@ -133,7 +132,7 @@ Etiquetat dels segments de veu i silenci:
 	* ¿Es capaz de sacar alguna conclusión a partir de la evolución de la tasa de cruces por cero?
 	
 	Podem veure que als segments de veu la taxa de creuaments per zero és més elevada que en silenci, això es especialment
-	útil per diferenciar el silenci de sons sords com la <s>.
+	útil per diferenciar el silenci de sons sords com la s
 
 
 ### Desarrollo del detector de actividad vocal
@@ -165,12 +164,16 @@ manual.
 - Si ha desarrollado el algoritmo para la cancelación de los segmentos de silencio, inserte una gráfica en
   la que se vea con claridad la señal antes y después de la cancelación (puede que `wavesurfer` no sea la
   mejor opción para esto, ya que no es capaz de visualizar varias señales al mismo tiempo).
+<img src="img/4151.jpg" width="640" align="center">
+<img src="img/4151_NC.jpg" width="640" align="center">
+La segona grafica és amb el soroll eliminat quan estem a silenci.
+
 
 #### Gestión de las opciones del programa usando `docopt_c`
 
 - Si ha usado `docopt_c` para realizar la gestión de las opciones y argumentos del programa `vad`, inserte
   una captura de pantalla en la que se vea el mensaje de ayuda del programa.
-
+ <img src="img/vad_docopt.jpg" width="640" align="center">
 
 ### Contribuciones adicionales y/o comentarios acerca de la práctica
 
