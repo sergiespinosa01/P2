@@ -105,15 +105,33 @@ Ejercicios
   continuación, una captura de `wavesurfer` en la que se vea con claridad la señal temporal, el contorno de
   potencia y la tasa de cruces por cero, junto con el etiquetado manual de los segmentos.
 
+Senyal temporal i tassa de creuaments per zero:
+
+![image] (/Users/sergi/PAV/P2/img/Captura de pantalla 2022-03-20 a les 20.32.05.png)
+
+Senyal temporal i contron de potència:
+
+
+Etiquetat dels segments de veu i silenci:
+![image] (/Users/sergi/PAV/P2/img/Captura de pantalla 2022-03-20 a les 19.43.06.png)
+
+
 
 - A la vista de la gráfica, indique qué valores considera adecuados para las magnitudes siguientes:
 
 	* Incremento del nivel potencia en dB, respecto al nivel correspondiente al silencio inicial, para
 	  estar seguros de que un segmento de señal se corresponde con voz.
+	  
+	En el nostre cas, alpha1, que és igual a 3.4 dB.
 
 	* Duración mínima razonable de los segmentos de voz y silencio.
 
+	Duració mínima segment de veu: 26 trames
+	Duració mínima segment de silenci: 1 trama?????
+
 	* ¿Es capaz de sacar alguna conclusión a partir de la evolución de la tasa de cruces por cero?
+	
+	La tassa de creuaments per zero de referència en l'inici és de 2920?????
 
 
 ### Desarrollo del detector de actividad vocal
@@ -130,6 +148,10 @@ Ejercicios
 - Evalúe los resultados sobre la base de datos `db.v4` con el script `vad_evaluation.pl` e inserte a 
   continuación las tasas de sensibilidad (*recall*) y precisión para el conjunto de la base de datos (sólo
   el resumen).
+  
+  Resum dels resultats:
+  
+  ![image] (/Users/sergi/PAV/P2/img/Captura de pantalla 2022-03-20 a les 20.39.59.png)
 
 
 ### Trabajos de ampliación
@@ -153,6 +175,8 @@ Ejercicios
 
 - Si lo desea, puede realizar también algún comentario acerca de la realización de la práctica que
   considere de interés de cara a su evaluación.
+  
+  No sabíem que no calia fer memòria i la tenim feta. És per això que igualment l'hem enviada per mail.
 
 
 ### Antes de entregar la práctica
