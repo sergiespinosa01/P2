@@ -105,7 +105,7 @@ Ejercicios
   continuación, una captura de `wavesurfer` en la que se vea con claridad la señal temporal, el contorno de
   potencia y la tasa de cruces por cero, junto con el etiquetado manual de los segmentos.
 
-Senyal temporal i tassa de creuaments per zero:
+Senyal temporal i taxa de creuaments per zero:
 
 ![image] (/Users/sergi/PAV/P2/img/Captura de pantalla 2022-03-20 a les 20.32.05.png)
 
@@ -127,11 +127,13 @@ Etiquetat dels segments de veu i silenci:
 	* Duración mínima razonable de los segmentos de voz y silencio.
 
 	Duració mínima segment de veu: 26 trames
-	Duració mínima segment de silenci: 1 trama?????
+	Duració mínima segment de silenci: hem estat experimentant amb duracions vàries de silenci, i totes les que 
+	hem provat baixaven el rendiment. Al final hem decidit no exigir una duració mínima de un segment silenci.
 
 	* ¿Es capaz de sacar alguna conclusión a partir de la evolución de la tasa de cruces por cero?
 	
-	La tassa de creuaments per zero de referència en l'inici és de 2920?????
+	Podem veure que als segments de veu la taxa de creuaments per zero és més elevada que en silenci, això es especialment
+	útil per diferenciar el silenci de sons sords com la <s>.
 
 
 ### Desarrollo del detector de actividad vocal
@@ -141,9 +143,11 @@ Etiquetat dels segments de veu i silenci:
 
 - Inserte una gráfica en la que se vea con claridad la señal temporal, el etiquetado manual y la detección
   automática conseguida para el fichero grabado al efecto. 
-
+<img src="img/Comparacion_transcripciones.jpg" width="640" align="center">
 
 - Explique, si existen. las discrepancias entre el etiquetado manual y la detección automática.
+La detecció automàtica detecta les pauses entre consonants com a silencis, cosa que no es considera a la transcripció
+manual.
 
 - Evalúe los resultados sobre la base de datos `db.v4` con el script `vad_evaluation.pl` e inserte a 
   continuación las tasas de sensibilidad (*recall*) y precisión para el conjunto de la base de datos (sólo
@@ -151,7 +155,7 @@ Etiquetat dels segments de veu i silenci:
   
   Resum dels resultats:
   
-  ![image] (/Users/sergi/PAV/P2/img/Captura de pantalla 2022-03-20 a les 20.39.59.png)
+  <img src="img/Tasa_efectividad.jpg" width="640" align="center">
 
 
 ### Trabajos de ampliación
