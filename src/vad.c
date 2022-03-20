@@ -56,7 +56,7 @@ Features compute_features(const float *x, int N)
  * TODO: Init the values of vad_data
  */
 
-VAD_DATA *vad_open(float rate, float alpha1, float alpha2, float alpha3)
+VAD_DATA *vad_open(float rate, float alpha1, float alpha2)
 {
   VAD_DATA *vad_data = malloc(sizeof(VAD_DATA));
   vad_data->state = ST_INIT;
@@ -64,7 +64,6 @@ VAD_DATA *vad_open(float rate, float alpha1, float alpha2, float alpha3)
   vad_data->frame_length = rate * FRAME_TIME * 1e-3;
   vad_data->alpha1 = alpha1;
   vad_data->alpha2 = alpha2;
-  /*vad_data->alpha3 = alpha3; */
   vad_data->counter = 0;
   vad_data->MAX_MBSILENCE = 6;
   vad_data->MAX_MBVOICE = 5;
