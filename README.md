@@ -114,7 +114,7 @@ Senyal temporal i contorn de potència:
 
 
 Etiquetat dels segments de veu i silenci:
-<img src="img/Transcripcion.jpg" width="640" align="center">
+<img src="P3/resultats.png" width="734" align="center">
 
 
 - A la vista de la gráfica, indique qué valores considera adecuados para las magnitudes siguientes:
